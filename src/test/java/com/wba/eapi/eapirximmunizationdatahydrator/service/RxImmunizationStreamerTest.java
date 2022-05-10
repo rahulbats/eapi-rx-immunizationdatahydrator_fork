@@ -1,5 +1,6 @@
 package com.wba.eapi.eapirximmunizationdatahydrator.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wba.eapi.eapirximmunizationdatahydrator.common.LoggingUtils;
 import com.wba.eapi.eapirximmunizationdatahydrator.constant.Constants;
 import io.confluent.kafka.schemaregistry.testutil.MockSchemaRegistry;
@@ -55,8 +56,10 @@ public class RxImmunizationStreamerTest {
         // Create topology to handle stream of users
 
         StreamsBuilder builder = new StreamsBuilder();
-
-        new RxImmunizationStreamer().kStream(builder, rxImmunizationProcessor);
+        RxImmunizationStreamer rxImmunizationStreamer= new RxImmunizationStreamer();
+        rxImmunizationStreamer.SCHEMA_REGISTRY_URL=MOCK_SCHEMA_REGISTRY_URL;
+        rxImmunizationStreamer.mapper= new ObjectMapper();
+        rxImmunizationStreamer.kStream(builder, rxImmunizationProcessor);
         Topology topology = builder.build();
 
         // Dummy properties needed for test diver
@@ -65,7 +68,7 @@ public class RxImmunizationStreamerTest {
         props.put(StreamsConfig.APPLICATION_ID_CONFIG,""+ rand.nextInt(100000));
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, "dummy:1234");
         props.put(StreamsConfig.DEFAULT_KEY_SERDE_CLASS_CONFIG, Serdes.StringSerde.class);
-        props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, GenericAvroSerde.class);
+        props.put(StreamsConfig.DEFAULT_VALUE_SERDE_CLASS_CONFIG, Serdes.StringSerde.class);
         props.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, MOCK_SCHEMA_REGISTRY_URL);
 
         // Create test driver
@@ -134,6 +137,66 @@ public class RxImmunizationStreamerTest {
         assertFalse(immunizationTopic.isEmpty());
         System.out.println(immunizationTopic.readRecord());
     }
+
+
+    @Test
+    public void testJoinMoreThan7Days(){
+        GenericRecord rxRecord = new GenericData.Record(rxSchema);
+
+        /*GenericRecord rxHeaders = new GenericData.Record(rxSchema.getField("headers").schema());
+        GenericData.EnumSymbol insertOperation = new GenericData.EnumSymbol( rxSchema.getField("headers").schema().getField("operation").schema(), "INSERT");
+        rxHeaders.put("operation", insertOperation);
+        rxRecord.put("headers", rxHeaders);*/
+        GenericRecord rxData = new GenericData.Record(rxSchema.getField(Constants.DATA).schema());
+        rxData.put(Constants.STORE_NBR, "store1");
+        rxData.put(Constants.RX_NBR, "rx1");
+        rxData.put(Constants.RX_IMMU_IND,"Y");
+        rxData.put(Constants.PAT_ID,"patient");
+        rxData.put(Constants.UPDATE_DTTM,"2015-10-09 16:01:39");
+        rxRecord.put(Constants.DATA, rxData);
+        GenericRecord fillRecord = new GenericData.Record(fillSchema);
+        GenericRecord fillData = new GenericData.Record(fillSchema.getField(Constants.DATA).schema());
+        fillData.put(Constants.STORE_NBR, "store1");
+        fillData.put(Constants.RX_NBR, "rx1");
+        fillData.put(Constants.UPDATE_DTTM,"2015-10-09 16:01:39");
+        fillRecord.put(Constants.DATA, fillData);
+
+        rxTopic.pipeInput("store1_rx1", rxRecord, System.currentTimeMillis()-(8*24*60*60*1000));
+        fillTopic.pipeInput("store1_rx1", fillRecord, System.currentTimeMillis());
+
+        assertTrue(immunizationTopic.isEmpty());
+
+    }
+
+
+    @Test
+    public void testJoin6Days(){
+        GenericRecord rxRecord = new GenericData.Record(rxSchema);
+
+        /*GenericRecord rxHeaders = new GenericData.Record(rxSchema.getField("headers").schema());
+        GenericData.EnumSymbol insertOperation = new GenericData.EnumSymbol( rxSchema.getField("headers").schema().getField("operation").schema(), "INSERT");
+        rxHeaders.put("operation", insertOperation);
+        rxRecord.put("headers", rxHeaders);*/
+        GenericRecord rxData = new GenericData.Record(rxSchema.getField(Constants.DATA).schema());
+        rxData.put(Constants.STORE_NBR, "store1");
+        rxData.put(Constants.RX_NBR, "rx1");
+        rxData.put(Constants.RX_IMMU_IND,"Y");
+        rxData.put(Constants.PAT_ID,"patient");
+        rxData.put(Constants.UPDATE_DTTM,"2015-10-09 16:01:39");
+        rxRecord.put(Constants.DATA, rxData);
+        GenericRecord fillRecord = new GenericData.Record(fillSchema);
+        GenericRecord fillData = new GenericData.Record(fillSchema.getField(Constants.DATA).schema());
+        fillData.put(Constants.STORE_NBR, "store1");
+        fillData.put(Constants.RX_NBR, "rx1");
+        fillData.put(Constants.UPDATE_DTTM,"2015-10-09 16:01:39");
+        fillRecord.put(Constants.DATA, fillData);
+
+        rxTopic.pipeInput("store1_rx1", rxRecord, System.currentTimeMillis()-(6*24*60*60*1000));
+        fillTopic.pipeInput("store1_rx1", fillRecord, System.currentTimeMillis());
+        assertFalse(immunizationTopic.isEmpty());
+        System.out.println(immunizationTopic.readRecord());
+    }
+
 
     @Test
     public void testDedup(){
