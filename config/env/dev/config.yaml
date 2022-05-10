@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: eapirximmunizationdatahydrator-config
+data:
+  ENV_CONFIGMAP1: placeholder1
+  ENV_CONFIGMAP2: placeholder2
+  config.yaml: |
+    # Add Environment key value pair as below for each env
+    # ENV_LOG_LOCATION: "./logs"
+    # ENV_LOG_LEVEL: "info"
+    info:
+      apiname: eapirximmunizationdatahydrator-config
+      status: ok
+      version: v1_0_0
+    management:
+        endpoints:
+            web:
+                base-path: /api/v1/walgreens/java/fromjenkins
+                exposure:
+                    include: health,info
+                path-mapping:
+                    info: ping

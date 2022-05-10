@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.2.xsd">
+    <suppress>
+        <notes><![CDATA[
+      file name: spring-boot-starter-2.1.5.RELEASE.jar
+      ]]></notes>
+        <gav regex="true">^org\.springframework\.boot:spring-boot-starter:.*$</gav>
+        <cpe>cpe:/a:pivotal_software:spring_boot</cpe>
+		<cpe>cpe:/a:springsource:spring_framework</cpe>
+		<cve>CVE-2011-2730</cve>
+		<cve>CVE-2013-4152</cve>
+		<cve>CVE-2013-6429</cve>
+		 <cve>CVE-2013-7315</cve>
+		 <cve>CVE-2014-0054</cve>
+
+    </suppress>
+     
+     
+    <suppress>
+        <notes><![CDATA[
+   file name: jackson-databind-2.9.8.jar
+   ]]></notes>
+        <gav regex="true">^com\.fasterxml\.jackson\.core:jackson-databind:.*$</gav>
+        <cpe>cpe:/a:fasterxml:jackson</cpe>
+		<cpe>cpe:/a:fasterxml:jackson-databind</cpe>
+		 <cve>CVE-2019-12086</cve>
+    </suppress>
+     
+
+    <suppress>
+        <notes><![CDATA[
+   file name: spring-data-commons-2.1.8.RELEASE.jar
+   ]]></notes>
+        <gav regex="true">^org\.springframework\.data:spring-data-commons:.*$</gav>
+        <cpe>cpe:/a:pivotal_software:spring_data_commons</cpe>
+		<cpe>cpe:/a:pivotal_software:spring_framework</cpe>
+		<cpe>cpe:/a:springsource:spring_framework</cpe>
+		<cve>CVE-2011-2730</cve>
+		<cve>CVE-2013-4152</cve>
+		<cve>CVE-2013-6429</cve>
+		<cve>CVE-2013-7315</cve>
+		<cve>CVE-2014-0054</cve>
+    </suppress>
+    	
+    <suppress>
+        <notes><![CDATA[
+   file name: guava-20.0.jar
+   ]]></notes>
+        <gav regex="true">^com\.google\.guava:guava:.*$</gav>
+        <cpe>cpe:/a:google:guava</cpe>
+		 <cve>CVE-2018-10237</cve>
+    </suppress>
+    
+
+    <suppress>
+        <notes><![CDATA[
+   file name: spring-boot-starter-web-2.1.5.RELEASE.jar
+   ]]></notes>
+        <gav regex="true">^org\.springframework\.boot:spring-boot-starter-web:.*$</gav>
+        <cpe>cpe:/a:pivotal_software:spring_boot</cpe>
+		<cpe>cpe:/a:springsource:spring_framework</cpe>
+		<cve>CVE-2011-2730</cve>
+		<cve>CVE-2013-4152</cve>
+		<cve>CVE-2013-6429</cve>
+		<cve>CVE-2013-7315</cve>
+		<cve>CVE-2014-0054</cve>
+    </suppress>
+      
+    
+	
+	
+    <suppress>
+        <notes><![CDATA[
+   file name: spring-boot-starter-json-2.1.5.RELEASE.jar
+   ]]></notes>
+        <gav regex="true">^org\.springframework\.boot:spring-boot-starter-json:.*$</gav>
+        <cve>CVE-2011-2730</cve>
+		<cpe>cpe:/a:pivotal_software:spring_boot</cpe>
+		<cpe>cpe:/a:springsource:spring_framework</cpe>
+		<cve>CVE-2011-2730</cve>
+		<cve>CVE-2013-4152</cve>
+		<cve>CVE-2013-6429</cve>
+		<cve>CVE-2013-7315</cve>
+		<cve>CVE-2014-0054</cve>
+    </suppress>    
+     
+     
+    <suppress>
+        <notes><![CDATA[
+   file name: spring-boot-autoconfigure-2.1.5.RELEASE.jar
+   ]]></notes>
+        <gav regex="true">^org\.springframework\.boot:spring-boot-autoconfigure:.*$</gav>
+        <cpe>cpe:/a:pivotal_software:spring_boot</cpe>
+		 <cpe>cpe:/a:springsource:spring_framework</cpe>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+   file name: spring-boot-starter-tomcat-2.1.5.RELEASE.jar
+   ]]></notes>
+        <gav regex="true">^org\.springframework\.boot:spring-boot-starter-tomcat:.*$</gav>
+        <cve>CVE-2011-2730</cve>
+        <cve>CVE-2013-4152</cve>
+        <cve>CVE-2013-6429</cve>
+        <cve>CVE-2013-7315</cve>
+        <cve>CVE-2014-0054</cve>
+    </suppress>
+
+    <suppress>
+        <notes><![CDATA[
+   file name: spring-boot-starter-logging-2.1.5.RELEASE.jar
+   ]]></notes>
+        <gav regex="true">^org\.springframework\.boot:spring-boot-starter-logging:.*$</gav>
+        <cpe>cpe:/a:pivotal_software:spring_boot</cpe>
+        <cpe>cpe:/a:springsource:spring_framework</cpe>
+        <cve>CVE-2011-2730</cve>
+        <cve>CVE-2013-4152</cve>
+        <cve>CVE-2013-6429</cve>
+        <cve>CVE-2013-7315</cve>
+        <cve>CVE-2014-0054</cve>
+    </suppress>
+
+
+</suppressions>

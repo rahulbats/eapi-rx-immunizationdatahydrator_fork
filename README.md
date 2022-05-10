@@ -1,0 +1,2 @@
+### Migration from Artifactory to ADO Artifacts ###
+The <id> found at the <distributionManagement> section in POM.xml is a reference to the Maven settings XML file, which has the actual URL to the Artifacts.

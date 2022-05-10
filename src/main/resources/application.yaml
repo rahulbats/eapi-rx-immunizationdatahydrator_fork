@@ -1,0 +1,121 @@
+---
+server:
+    port : 8080
+azure:
+    application-insights:
+        instrumentation-key: 802a0024-ad66-4211-8515-ab481141813c
+custom:
+    kafka-username-path: 'C:\mnt\secrets-store\eapi-kafkasasljaasusername-common-pharmacy-d.txt'
+    kafka-password-path: 'C:\mnt\secrets-store\eapi-kafkasaslaaspassword-common-pharmacy-d.txt'
+    sr-username-path: 'C:\mnt\secrets-store\eapi-secret1-schemaregistry-pharmacy-dev.txt'
+    sr-password-path: 'C:\mnt\secrets-store\eapi-secret2-schemaregistry-pharmacy-dev.txt'
+    streams.threads: '0'
+    insightLogging: true
+    enable.aggregatorlog: true
+    batch.log.size: 2
+logging:
+    level:
+        org.springframework.kafka.config: trace
+        root: 'INFO'
+        com:
+            wba:
+                eapi:
+                    eapirximmunizationdatahydrator: 'DEBUG'
+info:
+    apiname: eapirximmunizationdatahydrator
+    status: ok
+    version: v1_0_0
+management:
+    endpoints:
+        web:
+            base-path: /api/v1/walgreens/java/eapirximmunizationdatahydrator
+            path-mapping:
+                info: ping
+            exposure:
+                include: "metrics,health,info"
+    health:
+        binders:
+            enabled: true
+spring:
+    kafka:
+        bootstrap-servers: pkc-42nky.eastus2.azure.confluent.cloud:9092
+        state-dir-config: '/data/count-store'
+        properties:
+            ssl:
+                endpoint:
+                    identification:
+                        algorithm: https
+            security:
+                protocol: SASL_SSL
+            sasl:
+                mechanism: PLAIN
+                jaas:
+                    config: 'org.apache.kafka.common.security.plain.PlainLoginModule required username="{kafka-user}" password="{kafka-password}";'
+            schema.registry.url: https://psrc-4r0k9.westus2.azure.confluent.cloud
+            basic.auth.credentials.source: USER_INFO
+            schema.registry.basic.auth.user.info: '{sr-name}:{sr-pass}'
+    cloud:
+        stream:
+            bindings:
+                process-in-0:
+                    destination:
+                        rx-raw-topic: dev-eapi-prescription-immune-tbf0_rx_replica
+                        fill-raw-topic: dev-eapi-prescription-immune-fill_replica
+                        drug-raw-topic: dev-eapi-prescription-immune-tbf0_drug_replica
+                    consumer:
+                        useNativeDecoding: true
+                process-out-0:
+                    destination:
+                        rx-immunization-topic: dev-eapi-rx-immunization-hydrate
+                streams:
+                    default:
+                        group: dev-eapi-rx-immunization-data-hydrator-CG_1
+                        consumer:
+                            startOffset: earliest
+                            dlqName:
+                            configuration:
+                                max.poll.records: 300
+                                auto.commit.interval.ms: 1000
+                                reconnect.backoff.ms: 1000
+                                request.timeout.ms: 30000
+                                default.api.timeout: 60000
+                                autocommit.enable:
+                                isolation.level:
+                                max.task.idle.ms: 0
+                                exactly.once:
+                                replication.factor: 3
+                                cache.max.bytes.buffering: 0
+                                session.timeout.ms: '300000'
+                        producer:
+                            max.request.size: '100000'
+            kafka:
+                streams:
+                    binder:
+                        autoCreateTopics: false
+                        applicationId: dev-eapi-rx-immunization-data-hydrator-CG
+                        serdeError: sendToDlq
+                        configuration:
+                            commit.interval.ms: 100
+                            default:
+                                key.serde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                                value.serde: io.confluent.kafka.streams.serdes.avro.GenericAvroSerde
+                    bindings:
+                        process-in-0:
+                            consumer:
+                                dlqName: dev-eapi-historicfill-hydrator_error_temp
+                                keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
+                                valueSerde: io.confluent.kafka.streams.serdes.avro.GenericAvroSerde
+                                configuration:
+                                    specific.avro.reader: false
+log:
+    applicationId: eapirximmunizationdatahydrator
+    environment: Pharmacy
+    logentry: LogEntry
+    microservice: eapi-rx-immunizationdatahydrator
+    organization: wba
+    output: KAFKA
+    revision: v1_0_0
+    separator: '&&'
+    action: PULL
+    priority: 2
+    time.format: "yyyy-MM-dd HH:mm:ss.SSS"

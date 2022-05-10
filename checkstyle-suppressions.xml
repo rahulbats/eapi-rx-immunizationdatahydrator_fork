@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE suppressions PUBLIC
+  "-//Puppy Crawl//DTD Suppressions 1.0//EN"
+  "http://www.puppycrawl.com/dtds/suppressions_1_0.dtd">
+
+<suppressions>
+  <suppress checks="CustomImportOrder" files="."/>
+  <suppress checks="AbbreviationAsWordInName" files="."/>
+  <suppress checks="ParameterName" files="."/>
+  <suppress checks="TypeName" files="."/>
+  <suppress checks="LineLength" files="."/>
+  <!-- the launcher and date format helper class -->
+
+  <!-- all models -->
+  <suppress checks="." files="com[\\/]wba[\\/]dd[\\/]springreactor[\\/]eapirximmunizationdatahydrator[\\/]models[\\/]"/>
+
+
+  <!-- everything in API except delegator -->
+  <suppress checks=".*" files="com[\\/]wba[\\/]dd[\\/]springreactor[\\/]eapirximmunizationdatahydrator[\\/]api[\\/]"/>
+  <suppress checks=".*" files="com[\\/]wba[\\/]dd[\\/]springreactor[\\/]eapirximmunizationdatahydrator[\\/]api[\\/]"/>
+  <suppress checks=".*" files="com[\\/]wba[\\/]dd[\\/]springreactor[\\/]eapirximmunizationdatahydrator[\\/]api[\\/]"/>
+
+
+  <!-- documentation controller -->
+  <suppress checks=".*"
+    files="src[\\/]main[\\/]java[\\/]org[\\/]openapitools[\\/]configuration[\\/]"/>
+
+  <!-- SpringBoot Main class and date helper class -->
+  <suppress checks=".*" files="com[\\/]wba[\\/]dd[\\/]springreactor[\\/]eapirximmunizationdatahydrator[\\/]spring[\\/]"/>
+  <suppress checks=".*" files="com[\\/]wba[\\/]dd[\\/]springreactor[\\/]eapirximmunizationdatahydrator[\\/]spring[\\/]"/>
+
+</suppressions>

@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<ruleset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  name="myruleset"
+  xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+  xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+  <description>My ruleset</description>
+  <rule ref="category/java/codestyle.xml/DuplicateImports"/>
+  <rule ref="category/java/bestpractices.xml/UnusedImports"/>
+  <rule ref="category/java/codestyle.xml/UnnecessaryFullyQualifiedName"/>
+
+  <exclude-pattern>.*/gen/.*</exclude-pattern>
+
+
+  <!-- Rules here ... -->
+
+</ruleset>

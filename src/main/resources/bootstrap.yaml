@@ -1,0 +1,21 @@
+
+spring:
+  application:
+    name: eapirximmunizationdatahydrator-v1_0_1
+  cloud:
+    stream.kafka.binder:
+      auto-add-partitions: false
+      auto-create-topics: false
+      configuration:
+        “[security.protocol]“: SASL_SSL
+        “[ssl.enabled]“: true
+        “[sasl.mechanism]“: PLAIN
+        “[sasl.jaas.config]“: 'org.apache.kafka.common.security.plain.PlainLoginModule required username="5VMOCG3F26UC2IOO" password="2Iz5ZmkiU8JSQMmh5+yXTFKRZ5El+vL/kfgg1Nj/gzB0sz5D7Aq+ATLhWCEXdkEl";'
+    bus:
+      refresh:
+        enabled: true
+      env:
+        enabled: true
+      ack:
+        enabled: false
+  main.allow-bean-definition-overriding: true
